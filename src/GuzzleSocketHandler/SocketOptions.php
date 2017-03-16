@@ -27,6 +27,11 @@ class SocketOptions
     const SOCKET_TIMEOUT = RequestOptions::CONNECT_TIMEOUT;
 
     /**
+     * socket_connect $port parameter(int)
+     */
+    const SOCKET_PORT = 'port';
+
+    /**
      * socket debug flag (bool)
      */
     const SOCKET_DEBUG = RequestOptions::DEBUG;

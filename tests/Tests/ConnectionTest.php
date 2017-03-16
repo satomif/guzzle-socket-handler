@@ -3,6 +3,7 @@
 namespace psrebniak\GuzzleSocketHandler\Tests;
 
 use PHPUnit\Framework\TestCase;
+use psrebniak\GuzzleSocketHandler\SocketOptions;
 
 class ConnectionTest extends TestCase
 {
@@ -16,6 +17,9 @@ class ConnectionTest extends TestCase
 
     public function testConnection()
     {
-        self::assertEquals(200, $this->client->get('/')->getStatusCode(), "Server is responding");
+        self::assertEquals(200, $this->client->request('get', '', [
+            SocketOptions::SOCKET_PROTOCOL => SOL_TCP ,
+            'proxy' => ['http' => '', 'https' => '']
+        ])->getStatusCode(), "Server is responding");
     }
 }

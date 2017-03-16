@@ -46,6 +46,11 @@ class Socket
     protected $timeout = null;
 
     /**
+     * @var int
+     */
+    protected $port = 0;
+
+    /**
      * Socket constructor.
      *
      * @param $path
@@ -82,7 +87,7 @@ class Socket
             return $this;
         }
 
-        $this->socket = @socket_create($this->domain, $this->type, $this->protocol);
+        $this->socket = socket_create($this->domain, $this->type, $this->protocol);
         $lastError = socket_last_error($this->socket);
         $errorMessage = socket_strerror($lastError);
         socket_clear_error($this->socket);
@@ -117,7 +122,7 @@ class Socket
             echo __METHOD__ . PHP_EOL;
         }
 
-        if (false === @socket_connect($this->socket, $this->path)) {
+        if (false === @socket_connect($this->socket, $this->path, $this->port)) {
             $lastError = socket_last_error($this->socket);
             $errorMessage = socket_strerror($lastError);
             socket_clear_error($this->socket);
@@ -278,6 +283,9 @@ class Socket
         }
         if (isset($options[SocketOptions::SOCKET_TIMEOUT])) {
             $this->timeout = (float)$options[SocketOptions::SOCKET_TIMEOUT];
+        }
+        if (isset($options[SocketOptions::SOCKET_PORT])) {
+            $this->port = (int)$options[SocketOptions::SOCKET_PORT];
         }
         if (isset($options[SocketOptions::SOCKET_DEBUG])) {
             $this->debug = (bool)$options[SocketOptions::SOCKET_DEBUG];

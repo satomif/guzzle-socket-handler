@@ -45,6 +45,7 @@ class SocketHandlerFactory
         if (isset($options['delay'])) {
             usleep($options['delay'] * 1000);
         }
+        print_r($options);
         // set full uri request target with all keys (protocol, host etc)
         $request = $request->withRequestTarget((string)$request->getUri());
         $socket = new SocketHandler(
