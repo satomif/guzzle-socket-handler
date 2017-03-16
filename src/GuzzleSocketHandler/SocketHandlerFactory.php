@@ -35,9 +35,11 @@ class SocketHandlerFactory
     /**
      * @param string $path valid socket path
      */
-    public function __construct($path)
+    public function __construct($path = null)
     {
-        $this->path = $path;
+        if (isset($path)) {
+            $this->path = $path;
+        }
     }
 
     public function __invoke(RequestInterface $request, array $options)
@@ -45,11 +47,10 @@ class SocketHandlerFactory
         if (isset($options['delay'])) {
             usleep($options['delay'] * 1000);
         }
-        print_r($options);
         // set full uri request target with all keys (protocol, host etc)
         $request = $request->withRequestTarget((string)$request->getUri());
         $socket = new SocketHandler(
-            $this->path,
+            isset($this->path) ? $this->path : $request->getUri(),
             $options
         );
 
